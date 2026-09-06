@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nagasaki-taiwa.github.io/sitemap.xml
