@@ -42,12 +42,19 @@
   header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--kinari);position:sticky;top:0;z-index:5}
   header.top .mark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sumi);font-weight:600;font-size:1rem}
   header.top .mark svg{width:30px;height:30px}
+  header.top .mark span{white-space:nowrap}
   header.top nav a{margin-left:14px;font-size:.9rem;text-decoration:none;color:var(--sumi-soft)}
   @media(max-width:640px){header.top nav{display:none}}
   .wrap{max-width:860px;margin:0 auto;padding:0 20px}
   .hero{padding:72px 0 44px;text-align:center}
   .hero .kicker{color:var(--ai);letter-spacing:.22em;font-size:.82rem;margin-bottom:14px}
+  @media(max-width:640px){.hero .kicker{letter-spacing:.12em;font-size:.68rem}}
   .hero h1{font-size:clamp(1.8rem,4.8vw,2.7rem);line-height:1.5;margin:0 0 18px;font-weight:600}
+  @media(max-width:640px){.hero h1{font-size:1.55rem}}
+  .pc{display:inline} .sp{display:none}
+  @media(max-width:640px){.sp{display:inline}}
+  @media(max-width:640px){.pc{display:none}}
+  body{overflow-x:hidden}
   .hero h1 small{display:block;font-size:.5em;color:var(--ai);font-weight:400;margin-top:6px}
   .hero p.lead{font-size:1.08rem;color:var(--sumi-soft);margin:0 auto;max-width:620px}
   .tag{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:.85rem;color:var(--ai);margin:8px 4px 0}
@@ -85,15 +92,15 @@
     <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="#2E4A62" stroke-width="3"/><g fill="#C9A227"><circle cx="32" cy="10" r="5"/><circle cx="51" cy="21" r="5"/><circle cx="51" cy="43" r="5"/><circle cx="32" cy="54" r="5"/><circle cx="13" cy="43" r="5"/><circle cx="13" cy="21" r="5"/></g></svg>
     <span>長崎 対話の場ネットワーク</span>
   </a>
-  <nav><a href="#kotoba">大切にしたいこと</a><a href="#katsudo">していくこと</a><a href="#yotei">予定</a><a href="#join">仲間になる</a></nav>
+  <nav><a href="#kotoba">大切にしたいこと</a><a href="#katsudo">していくこと</a><a href="#yotei">予定</a><a href="members.html">仲間の活動</a><a href="#join">仲間になる</a></nav>
 </header>
 
 <main class="wrap" id="top">
   <div class="hero">
     <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="#2E4A62" stroke-width="2.5"/><g fill="#C9A227"><circle cx="32" cy="10" r="5"/><circle cx="51" cy="21" r="5"/><circle cx="51" cy="43" r="5"/><circle cx="32" cy="54" r="5"/><circle cx="13" cy="43" r="5"/><circle cx="13" cy="21" r="5"/></g></svg>
     <div class="kicker">NAGASAKI TAIWA NO BA NETWORK</div>
-    <h1 class="serif">長崎 対話の場ネットワーク<small>（仮称）</small></h1>
-    <p class="lead serif">長崎で「聴き合う場」をひらいている人と、小さな団体が、<br>ゆるやかにつながって、たがいの活動を応援し合う会です。</p>
+    <h1 class="serif">長崎<span class="pc"> </span><br class="sp">対話の場ネットワーク<small>（仮称）</small></h1>
+    <p class="lead serif">長崎で「聴き合う場」をひらいている人と、小さな団体が、<br class="pc">ゆるやかにつながって、たがいの活動を応援し合う会です。</p>
     <div>
       <span class="tag">会費なし</span><span class="tag">入退会自由</span><span class="tag">個人でも団体でも</span><span class="tag">2026年11月8日 はじまりの会</span>
     </div>
@@ -126,6 +133,12 @@
     <div class="event"><div class="d">2026年11月8日（日）</div><div><strong>はじまりの会</strong>　会場：さぽめの<br><span class="small">長崎で聴き合う場をひらく人たちの交流会。会のかたち（会則）と共同代表をみんなで確認します。</span></div></div>
     <div class="event"><div class="d">2026年12月6日（日）</div><div><strong>映画『こどもかいぎ』上映会　上映後の対話会</strong>（共催）<br><span class="small">主催：こどもまんなか居場所づくり。観た人どうしが感じたことを聴き合う時間を、いっしょにひらきます。</span></div></div>
     <div class="event"><div class="d">毎月1回</div><div><strong>聴き合う場をひらく人の集まり</strong><br><span class="small">長崎市市民活動センター「ランタナ」会議室、会員の場、オンラインなど。日程はこのページでお知らせします。</span></div></div>
+  </section>
+
+  <section id="members">
+    <h2>仲間の活動</h2>
+    <p>会員がそれぞれにひらいている「聴き合う場」を紹介しています。ボードゲーム、オープンダイアローグ、余白、感情をていねいに聴く対話。かたちはさまざまです。</p>
+    <a class="cta sub" href="members.html">仲間の活動を見る</a>
   </section>
 
   <section id="kimekata">
