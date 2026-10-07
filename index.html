@@ -13,7 +13,8 @@
 <meta property="og:url" content="https://nagasaki-taiwa.github.io/">
 <meta property="og:image" content="https://nagasaki-taiwa.github.io/ogp.png">
 <meta property="og:locale" content="ja_JP">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -29,8 +30,9 @@
 </script>
 <style>
   :root{
-    --ai:#2E4A62; --ai-deep:#1F3345; --karashi:#C9A227; --karashi-text:#8A6D14;
-    --kinari:#F7F4EC; --kinari-deep:#EEE9DC; --line:#D9D2C2; --sumi:#2B2822; --sumi-soft:#4A463E;
+    --ai:#3B7A4F; --ai-deep:#2A5A39; --karashi:#FDB447; --karashi-text:#A5530F;
+    --sky:#3FB4DC; --leaf:#5FA55A; --sun:#F2784B;
+    --kinari:#FBF9F4; --kinari-deep:#F1EEE4; --line:#DDD8CB; --sumi:#2B2822; --sumi-soft:#4A463E;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -41,7 +43,7 @@
   a{color:var(--ai-deep)}
   header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--kinari);position:sticky;top:0;z-index:5}
   header.top .mark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sumi);font-weight:600;font-size:1rem}
-  header.top .mark svg{width:30px;height:30px}
+  header.top .mark img{width:34px;height:34px}
   header.top .mark span{white-space:nowrap}
   header.top nav a{margin-left:14px;font-size:.9rem;text-decoration:none;color:var(--sumi-soft)}
   @media(max-width:640px){header.top nav{display:none}}
@@ -62,6 +64,9 @@
   section{padding:44px 0;border-top:1px solid var(--line)}
   h2{font-size:1.35rem;margin:0 0 18px;color:var(--sumi);display:flex;align-items:center;gap:12px}
   h2::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--karashi);flex:none}
+  section:nth-of-type(4n+2) h2::before{background:var(--sky)}
+  section:nth-of-type(4n+3) h2::before{background:var(--leaf)}
+  section:nth-of-type(4n) h2::before{background:var(--sun)}
   .kotoba{display:grid;gap:14px}
   .kotoba .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px}
   .kotoba .q{font-size:.8rem;color:var(--karashi-text);letter-spacing:.15em;margin-bottom:6px}
@@ -89,7 +94,7 @@
 <body>
 <header class="top">
   <a class="mark" href="#top">
-    <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="#2E4A62" stroke-width="3"/><g fill="#C9A227"><circle cx="32" cy="10" r="5"/><circle cx="51" cy="21" r="5"/><circle cx="51" cy="43" r="5"/><circle cx="32" cy="54" r="5"/><circle cx="13" cy="43" r="5"/><circle cx="13" cy="21" r="5"/></g></svg>
+    <img src="logo.png" alt="" width="34" height="34">
     <span>ながさき対話の場ネットワーク</span>
   </a>
   <nav><a href="#kotoba">大切にしたいこと</a><a href="#katsudo">していくこと</a><a href="#yotei">予定</a><a href="members.html">仲間の活動</a><a href="#join">仲間になる</a></nav>
@@ -97,7 +102,7 @@
 
 <main class="wrap" id="top">
   <div class="hero">
-    <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="#2E4A62" stroke-width="2.5"/><g fill="#C9A227"><circle cx="32" cy="10" r="5"/><circle cx="51" cy="21" r="5"/><circle cx="51" cy="43" r="5"/><circle cx="32" cy="54" r="5"/><circle cx="13" cy="43" r="5"/><circle cx="13" cy="21" r="5"/></g></svg>
+    <img class="ring" src="logo.png" alt="" width="120" height="120">
     <div class="kicker">NAGASAKI TAIWA NO BA NETWORK</div>
     <h1 class="serif">ながさき<br class="sp">対話の場ネットワーク</h1>
     <p class="lead serif">長崎で「聴き合う場」をひらいている人と、小さな団体が、<br class="pc">ゆるやかにつながって、たがいの活動を応援し合う会です。</p>
@@ -130,7 +135,7 @@
 
   <section id="yotei">
     <h2>これからの予定</h2>
-    <div class="event"><div class="d">2026年11月8日（日）</div><div><strong>はじまりの会</strong>　会場：さぽめの<br><span class="small">長崎で聴き合う場をひらく人たちの交流会。会のかたち（会則）と共同代表をみんなで確認します。</span></div></div>
+    <div class="event"><div class="d">2026年11月8日（日）</div><div><strong>はじまりの会</strong>　会場：さぽめの（女の都第2幼稚園跡地）<br><span class="small">長崎で聴き合う場をひらく人たちの交流会。会のかたち（会則）と共同代表をみんなで確認します。</span></div></div>
     <div class="event"><div class="d">2026年12月6日（日）</div><div><strong>映画『こどもかいぎ』上映会　上映後の対話会</strong>（共催）<br><span class="small">主催：こどもまんなか居場所づくり。観た人どうしが感じたことを聴き合う時間を、いっしょにひらきます。</span></div></div>
     <div class="event"><div class="d">毎月1回</div><div><strong>聴き合う場をひらく人の集まり</strong><br><span class="small">長崎市市民活動センター「ランタナ」会議室、会員の場、オンラインなど。日程はこのページでお知らせします。</span></div></div>
   </section>
