@@ -122,6 +122,9 @@
 
   </section>
 
+  <!-- ▼ 入会フォームで「掲載OK」になった会員が、ここに自動で並びます（下の script 参照） -->
+  <section class="grid" id="newMembers" aria-label="新しく加わった会員の活動" style="padding-top:0"></section>
+
   <div class="invite">
     <h2>あなたの場も、ここに</h2>
     <p>長崎で聴き合う場をひらいている方、これからひらきたい方。会員になると、このページであなたの活動を紹介できます。会費はありません。</p>
@@ -133,5 +136,51 @@
   <a href="index.html">トップへ戻る</a><br>
   © 2026 ながさき対話の場ネットワーク
 </footer>
+<script>
+/* 会員の自動掲載：回答シートの「掲載用」タブ（ウェブに公開・CSV）を読み込んで、カードを並べます。
+   公開URLを下に貼ると有効になります。空のままなら何も起きません。 */
+var MEMBERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYWGJq8X0i3iy2E2JWyVOjnLSe74-GkvKqKTUFTeeEANj9MUbKHgnBp-YXMNOhxIADYJc4Uvlyk_gq/pub?gid=886849924&single=true&output=csv';
+
+(function(){
+  if(!MEMBERS_CSV_URL) return;
+  function parseCSV(t){
+    var rows=[],r=[],f='',q=false,i,c;
+    for(i=0;i<t.length;i++){
+      c=t[i];
+      if(q){ if(c==='"'){ if(t[i+1]==='"'){f+='"';i++;} else q=false; } else f+=c; }
+      else if(c==='"') q=true;
+      else if(c===','){ r.push(f); f=''; }
+      else if(c==='\n'||c==='\r'){ if(c==='\r'&&t[i+1]==='\n') i++; r.push(f); rows.push(r); r=[]; f=''; }
+      else f+=c;
+    }
+    if(f!==''||r.length){ r.push(f); rows.push(r); }
+    return rows;
+  }
+  function safeUrl(u){
+    try{ var x=new URL((u||'').trim()); return (x.protocol==='https:'||x.protocol==='http:')?x:null; }catch(e){ return null; }
+  }
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text) e.textContent=text; return e; }
+  function link(url,text){ var a=el('a','',text); a.href=url.href; a.target='_blank'; a.rel='noopener'; return a; }
+
+  fetch(MEMBERS_CSV_URL).then(function(r){ return r.text(); }).then(function(t){
+    var rows=parseCSV(t).slice(1), box=document.getElementById('newMembers');
+    rows.forEach(function(c){
+      var name=(c[0]||'').trim(); if(!name) return;
+      var act=(c[1]||'').trim(), intro=(c[2]||'').trim(), tags=(c[3]||'').split(/[,、]\s*/).filter(Boolean), url=safeUrl(c[4]);
+      var card=el('article','card');
+      card.appendChild(el('div','nick',name));
+      if(act){ var a=el('div','act'); if(url) a.appendChild(link(url,act)); else a.textContent=act; card.appendChild(a); }
+      if(intro) card.appendChild(el('p','',intro));
+      if(tags.length){
+        card.appendChild(el('div','label','関心のあること'));
+        var tg=el('div','tags'); tags.forEach(function(x){ tg.appendChild(el('span','tag',x)); }); card.appendChild(tg);
+      }
+      if(url){ var l=el('div','link'); l.appendChild(link(url,url.hostname+(url.pathname.length>1?url.pathname:''))); card.appendChild(l); }
+      box.appendChild(card);
+    });
+  }).catch(function(){});
+})();
+</script>
+
 </body>
 </html>
