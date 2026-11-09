@@ -62,6 +62,15 @@
   .cta{display:inline-block;background:var(--ai);color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:600;margin-top:4px}
   footer{padding:40px 20px 60px;text-align:center;color:var(--sumi-soft);font-size:.85rem;border-top:1px solid var(--line)}
   footer a{color:var(--sumi-soft)}
+  #newMembers{align-items:start;padding-top:24px}
+  .mcard{padding:0}
+  .mcard summary{list-style:none;cursor:pointer;padding:18px 48px 18px 22px;position:relative;display:flex;flex-direction:column;gap:4px}
+  .mcard summary::-webkit-details-marker{display:none}
+  .mcard summary::after{content:"＋";position:absolute;right:20px;top:18px;color:var(--ai);font-weight:600}
+  .mcard[open] summary::after{content:"－"}
+  .mcard summary:hover .nick{color:var(--ai-deep)}
+  .mcard .more{padding:0 22px 20px;display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);margin:0 22px;padding:14px 0 18px}
+  .mcard .intro{margin:0;white-space:pre-wrap;font-size:.98rem;line-height:1.8}
 </style>
 </head>
 <body>
@@ -86,7 +95,7 @@
       ニックネーム・名前・活動名・リンク・関心のあること を書き換えてください。
       関心が複数あるときは <span class="tag"> を増やします。
   -->
-  <section class="grid" aria-label="会員の活動">
+  <section class="grid" id="staticMembers" aria-label="会員の活動">
 
     <article class="card">
       <div class="nick">イデタク<small>井手 拓也</small></div>
@@ -112,18 +121,10 @@
       <div class="link"><a href="https://www.instagram.com/yohaku__ma/" target="_blank" rel="noopener">Instagram @yohaku__ma</a></div>
     </article>
 
-    <article class="card">
-      <div class="nick">ひよこ<small>柿田 安岐子</small></div>
-      <div class="act"><a href="https://taiwa-nukadoko.com/" target="_blank" rel="noopener">対話のNukadoko</a></div>
-      <div class="label">関心のあること</div>
-      <div class="tags"><span class="tag">感情をていねいに聴く</span></div>
-      <div class="link"><a href="https://taiwa-nukadoko.com/" target="_blank" rel="noopener">taiwa-nukadoko.com</a></div>
-    </article>
-
   </section>
 
-  <!-- ▼ 入会フォームで「掲載OK」になった会員が、ここに自動で並びます（下の script 参照） -->
-  <section class="grid" id="newMembers" aria-label="新しく加わった会員の活動" style="padding-top:0"></section>
+  <!-- ▼ 入会フォームで「掲載OK」になった会員が、あいうえお順で自動で並びます（下の script 参照）。読み込めたときは上の静的カードは隠れます -->
+  <section class="grid" id="newMembers" aria-label="新しく加わった会員の活動" ></section>
 
   <div class="invite">
     <h2>あなたの場も、ここに</h2>
@@ -137,9 +138,18 @@
   © 2026 ながさき対話の場ネットワーク
 </footer>
 <script>
-/* 会員の自動掲載：回答シートの「掲載用」タブ（ウェブに公開・CSV）を読み込んで、カードを並べます。
-   公開URLを下に貼ると有効になります。空のままなら何も起きません。 */
-var MEMBERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYWGJq8X0i3iy2E2JWyVOjnLSe74-GkvKqKTUFTeeEANj9MUbKHgnBp-YXMNOhxIADYJc4Uvlyk_gq/pub?gid=886849924&single=true&output=csv';
+/* 会員の自動掲載：回答シートの「掲載用」タブ（ウェブに公開・CSV）を読み込み、
+   ニックネームのあいうえお順に並べて、クリックで詳細が開くカードにします。
+   列：掲載名, よみがな, 本名(載せてよい人のみ), 活動名, 紹介, 関心, リンク
+   読み込めなかったときは、上の静的なカード（#staticMembers）がそのまま表示されます。 */
+var MEMBERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSvYEUcmmvYg7KJ1Yx9tpztXgxnaWx5FMKesLoZBnbHwNzLNJsZEkOK7tj59GjqeQN2Ay_Np41Q7_jV/pub?gid=426241330&single=true&output=csv';
+
+/* フォームをまだ送っていない共同代表のカード（フォームで承認されたら、同じ掲載名のものが優先されて自動で置き換わります） */
+var STATIC_MEMBERS = [
+  {name:'イデタク', yomi:'いでたく', real:'井手 拓也', act:'Vivaらぼ', intro:'', tags:['ボードゲーム'], url:'https://www.vivalab.fun/'},
+  {name:'きいちゃん', yomi:'きいちゃん', real:'岩崎 堅治', act:'聞きカフェ', intro:'', tags:['オープンダイアローグ'], url:'https://www.instagram.com/keychantaiwa'},
+  {name:'りえ', yomi:'りえ', real:'東坂 理絵', act:'余白', intro:'', tags:[], url:'https://www.instagram.com/yohaku__ma/'}
+];
 
 (function(){
   if(!MEMBERS_CSV_URL) return;
@@ -160,24 +170,42 @@ var MEMBERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYWGJq8X
     try{ var x=new URL((u||'').trim()); return (x.protocol==='https:'||x.protocol==='http:')?x:null; }catch(e){ return null; }
   }
   function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text) e.textContent=text; return e; }
-  function link(url,text){ var a=el('a','',text); a.href=url.href; a.target='_blank'; a.rel='noopener'; return a; }
+  function kana(s){ return (s||'').replace(/[\u30A1-\u30F6]/g,function(c){ return String.fromCharCode(c.charCodeAt(0)-0x60); }).trim(); }
+  var collator=new Intl.Collator('ja',{sensitivity:'base'});
 
-  fetch(MEMBERS_CSV_URL).then(function(r){ return r.text(); }).then(function(t){
-    var rows=parseCSV(t).slice(1), box=document.getElementById('newMembers');
-    rows.forEach(function(c){
-      var name=(c[0]||'').trim(); if(!name) return;
-      var act=(c[1]||'').trim(), intro=(c[2]||'').trim(), tags=(c[3]||'').split(/[,、]\s*/).filter(Boolean), url=safeUrl(c[4]);
-      var card=el('article','card');
-      card.appendChild(el('div','nick',name));
-      if(act){ var a=el('div','act'); if(url) a.appendChild(link(url,act)); else a.textContent=act; card.appendChild(a); }
-      if(intro) card.appendChild(el('p','',intro));
-      if(tags.length){
-        card.appendChild(el('div','label','関心のあること'));
-        var tg=el('div','tags'); tags.forEach(function(x){ tg.appendChild(el('span','tag',x)); }); card.appendChild(tg);
+  fetch(MEMBERS_CSV_URL).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(t){
+    var list=parseCSV(t).slice(1).map(function(c){
+      return {name:(c[0]||'').trim(), yomi:(c[1]||'').trim(), real:(c[2]||'').trim(), act:(c[3]||'').trim(),
+              intro:(c[4]||'').trim(), tags:(c[5]||'').split(/[,、]\s*/).map(function(x){return x.trim();}).filter(Boolean), url:(c[6]||'').trim()};
+    }).filter(function(m){ return m.name && m.name.charAt(0)!=='#'; });
+    var names={}; list.forEach(function(m){ names[m.name]=1; });
+    STATIC_MEMBERS.forEach(function(m){ if(!names[m.name]) list.push(m); });
+    list.sort(function(a,b){ return collator.compare(kana(a.yomi||a.name), kana(b.yomi||b.name)); });
+
+    var box=document.getElementById('newMembers'); box.textContent='';
+    list.forEach(function(m){
+      var url=safeUrl(m.url);
+      var card=el('details','card mcard');
+      var sum=el('summary');
+      var nick=el('div','nick',m.name); if(m.real) nick.appendChild(el('small','',m.real));
+      sum.appendChild(nick);
+      if(m.act) sum.appendChild(el('div','act',m.act));
+      card.appendChild(sum);
+      var more=el('div','more');
+      if(m.intro) more.appendChild(el('p','intro',m.intro));
+      if(m.tags.length){
+        more.appendChild(el('div','label','関心のあること'));
+        var tg=el('div','tags'); m.tags.forEach(function(x){ tg.appendChild(el('span','tag',x)); }); more.appendChild(tg);
       }
-      if(url){ var l=el('div','link'); l.appendChild(link(url,url.hostname+(url.pathname.length>1?url.pathname:''))); card.appendChild(l); }
+      if(url){
+        var l=el('div','link'), a=el('a','',url.hostname+(url.pathname.length>1?url.pathname:''));
+        a.href=url.href; a.target='_blank'; a.rel='noopener'; l.appendChild(a); more.appendChild(l);
+      }
+      if(!m.intro&&!m.tags.length&&!url) more.appendChild(el('p','small','（くわしい紹介は準備中です）'));
+      card.appendChild(more);
       box.appendChild(card);
     });
+    var st=document.getElementById('staticMembers'); if(st) st.style.display='none';
   }).catch(function(){});
 })();
 </script>
